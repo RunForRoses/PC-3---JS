@@ -8,10 +8,8 @@ export function Catalogo({ libros }) {
   const [categoria, setCategoria] = useState('');
   const [texto, setTexto] = useState('');
 
-  // Generado con Set como pide la guía
   const categorias = [...new Set(libros.map((l) => l.categoria))];
 
-  // La lista filtrada se calcula en cada render, sin otro estado
   const librosFiltrados = libros.filter((l) => {
     const coincideCategoria = !categoria || l.categoria === categoria;
     const busqueda = texto.toLowerCase().trim();

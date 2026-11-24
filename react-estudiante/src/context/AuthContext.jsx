@@ -3,7 +3,7 @@ import db from '../data/db.json';
 
 const esCorreoUTP = (correo) => {
   if (typeof correo !== 'string') return false;
-  return /^[a-z0-9._%+-]+@utp\.edu\.pe$/i.test(correo.trim());
+  return /^U\d{8}+@utp\.edu\.pe$/i.test(correo.trim());
 };
 
 const AuthContext = createContext();

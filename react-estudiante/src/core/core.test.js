@@ -5,7 +5,7 @@ import { esISBN, esCodigoAlumno, esFecha, validarPrestamo } from './validadores.
 import { Libro, Prestamo } from './modelos.js';
 import { prestamosPorEstado, librosMasPrestados, autoresUnicos, puedePrestar, crearGeneradorCodigos } from './estadisticas.js';
 
-test('a.1 esISBN: exactamente 13 digitos y empieza con 978 o 979', () => {
+test('esISBN: exactamente 13 digitos y empieza con 978 o 979', () => {
     assert.equal(esISBN('9780132350884'), true);
     assert.equal(esISBN('9791090636071'), true);
     assert.equal(esISBN('9770132350884'), false);
@@ -13,21 +13,21 @@ test('a.1 esISBN: exactamente 13 digitos y empieza con 978 o 979', () => {
     assert.equal(esISBN('97812345678901'), false);
 });
 
-test('a.2 esCodigoAlumno: U mayuscula seguida de 8 digitos', () => {
+test('esCodigoAlumno: U mayuscula seguida de 8 digitos', () => {
     assert.equal(esCodigoAlumno('U23307645'), true);
     assert.equal(esCodigoAlumno('u23307645'), false);
     assert.equal(esCodigoAlumno('U1234567'), false);
     assert.equal(esCodigoAlumno('U123456789'), false);
 });
 
-test('a.3 esFecha: formato AAAA-MM-DD con mes 01-12 y dia 01-31', () => {
+test('esFecha: formato AAAA-MM-DD con mes 01-12 y dia 01-31', () => {
     assert.equal(esFecha('2026-11-20'), true);
     assert.equal(esFecha('20-11-2026'), false);
     assert.equal(esFecha('2026-13-01'), false);
     assert.equal(esFecha('2026-11-32'), false);
 });
 
-test('a.4 validarPrestamo: valida libroId, formato de fechas, devolucion posterior y maximo 15 dias', () => {
+test('validarPrestamo: valida libroId, formato de fechas, devolucion posterior y maximo 15 dias', () => {
     const prestamoValido = {
         libroId: 1,
         fechaPrestamo: '2026-11-01',
@@ -66,12 +66,12 @@ test('a.4 validarPrestamo: valida libroId, formato de fechas, devolucion posteri
     assert.ok(validarPrestamo(masDe15Dias).duracion);
 });
 
-test('b.1 Libro: constructor y getter etiqueta Titulo (año)', () => {
+test('Libro: constructor y getter etiqueta Titulo (año)', () => {
     const libro = new Libro({ titulo: 'Cien años de soledad', año: 1967 });
     assert.equal(libro.etiqueta, 'Cien años de soledad (1967)');
 });
 
-test('b.2 Prestamo: getter activo, diasPrestamo y estaVencido', () => {
+test('Prestamo: getter activo, diasPrestamo y estaVencido', () => {
     const prestamo = new Prestamo({
         id: 1,
         libroId: 10,
@@ -99,7 +99,7 @@ test('b.2 Prestamo: getter activo, diasPrestamo y estaVencido', () => {
     assert.equal(prestamoDevuelto.estaVencido('2026-11-15'), false);
 });
 
-test('c.1 prestamosPorEstado: conteo por estado con reduce -> { activo, devuelto }', () => {
+test('prestamosPorEstado: conteo por estado con reduce -> { activo, devuelto }', () => {
     const prestamos = [
         { estado: 'activo' },
         { estado: 'devuelto' },
@@ -108,7 +108,7 @@ test('c.1 prestamosPorEstado: conteo por estado con reduce -> { activo, devuelto
     assert.deepEqual(prestamosPorEstado(prestamos), { activo: 2, devuelto: 1 });
 });
 
-test('c.2 librosMasPrestados: ranking con Map, sort y spread sin modificar el original', () => {
+test('librosMasPrestados: ranking con Map, sort y spread sin modificar el original', () => {
     const libros = [{ id: 1, titulo: 'A' }, { id: 2, titulo: 'B' }];
     const prestamos = [{ libroId: 2 }, { libroId: 2 }, { libroId: 1 }];
     const ranking = librosMasPrestados(libros, prestamos);
@@ -120,7 +120,7 @@ test('c.2 librosMasPrestados: ranking con Map, sort y spread sin modificar el or
     assert.equal(libros[0].id, 1);
 });
 
-test('c.3 autoresUnicos: devuelve autores sin duplicados usando Set', () => {
+test('autoresUnicos: devuelve autores sin duplicados usando Set', () => {
     const libros = [
         { autor: 'Gabriel García Márquez' },
         { autor: 'Robert C. Martin' },
@@ -129,7 +129,7 @@ test('c.3 autoresUnicos: devuelve autores sin duplicados usando Set', () => {
     assert.deepEqual(autoresUnicos(libros), ['Gabriel García Márquez', 'Robert C. Martin']);
 });
 
-test('c.4 puedePrestar: true si tiene menos de 3 prestamos activos', () => {
+test('puedePrestar: true si tiene menos de 3 prestamos activos', () => {
     const prestamos = [
         { usuarioId: 1, estado: 'activo' },
         { usuarioId: 1, estado: 'activo' }
@@ -140,7 +140,7 @@ test('c.4 puedePrestar: true si tiene menos de 3 prestamos activos', () => {
     assert.equal(puedePrestar(1, prestamos), false);
 });
 
-test('c.5 crearGeneradorCodigos: closure que devuelve PRE-0008, PRE-0009... usando padStart', () => {
+test('crearGeneradorCodigos: closure que devuelve PRE-0008, PRE-0009... usando padStart', () => {
     const generar = crearGeneradorCodigos('PRE', 8);
     assert.equal(generar(), 'PRE-0008');
     assert.equal(generar(), 'PRE-0009');
