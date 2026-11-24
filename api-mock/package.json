@@ -1,0 +1,15 @@
+{
+  "name": "api-mock",
+  "version": "1.0.0",
+  "description": "Practica calificada 3 - Huaches",
+  "main": "index.js",
+  "scripts": {
+    "api": "json-server --watch db.json --port 3000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "json-server": "^0.17.4"
+  }
+}

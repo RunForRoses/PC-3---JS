@@ -1,0 +1,42 @@
+### 1. Listar los libros de la categoría Literatura
+# Código de estado obtenido: 200 OK
+GET http://localhost:3000/libros?categoria=Literatura
+
+### 2. Buscar "Vargas" en cualquier campo de los libros
+# Código de estado obtenido: 200 OK
+GET http://localhost:3000/libros?q=Vargas
+
+### 3. Crear un libro nuevo
+# Código de estado obtenido: 201 Created
+POST http://localhost:3000/libros
+Content-Type: application/json
+
+{
+  "isbn": "9780132350884",
+  "titulo": "Clean Code",
+  "autor": "Robert C. Martin",
+  "categoria": "Programación",
+  "anio": 2008,
+  "disponible": true
+}
+
+### 4. Marcar como disponible el libro 2 cambiando un solo campo
+# Código de estado obtenido: 200 OK
+PATCH http://localhost:3000/libros/2
+Content-Type: application/json
+
+{
+  "disponible": true
+}
+
+### 5. Listar los préstamos activos del usuario 2
+# Código de estado obtenido: 200 OK
+GET http://localhost:3000/prestamos?usuarioId=2&estado=activo
+
+### 6a. Eliminar el libro creado
+# Código de estado obtenido: 200 OK
+DELETE http://localhost:3000/libros/7
+
+### 6b. Comprobar con un GET que ya no existe
+# Código de estado obtenido: 404 Not Found
+GET http://localhost:3000/libros/7
